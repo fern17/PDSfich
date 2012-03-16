@@ -1,6 +1,10 @@
-** Repositorio de la Materia Procesamiento Digital de Señales 2012 - UNL FICH **
+Procesamiento Digital de Señales 2012 - UNL FICH
+========================
+Lenguaje Utilizado: Octave.
 
-*Integrantes*
-	* Benassi, Damián.
-	* Nellmeldin, Fernando.
-	* Peyregne, Mariano.
+Developers/Collaborators
+---------------
+
+* **Benassi, Damián.** 
+* **Nellmeldin, Fernando.**
+* **Peyregne, Mariano.**
