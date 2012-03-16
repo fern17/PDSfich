@@ -53,9 +53,24 @@ endfunction
 function y=ro(x, H, N) 
 	if x < 0
 		y = 0;
-	else if x < (N-1)*H 
+	elseif x < (N-1)*H 
 		y = H*floor(x/H);
 	else
 		y = (N -1 ) * H;
+	end
 endfunction
 
+
+function cuantizacion(A, w, phi, t0, dt, tf, H = 8, color = 'b')
+	#Ferdi dijo: Mientras H se acerca a dt entonces la grafica cuantizada se aproxima igual a la discretizada. 
+    clf;
+	t = t0:dt:tf-dt;
+	figure(1);
+	plot(t, A*sin(w*t + phi) , 'r');
+	hold on;
+	plot(t, ro(A*sin(w*t + phi), H, length(t) ), color);
+	#hold on;
+
+endfunction
+
+cuantizacion(10, 2, 0, -5, 0.01, 5);
