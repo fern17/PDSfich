@@ -3,7 +3,7 @@
 # Para correr algunas funciones es necesario el paquete specfun
 # sudo apt-get install octave-specfun
 
-#Grafica la señal Seno
+#Ejercicio 1.1) Grafica la señal Seno
 function graficaSeno(x0,dx,xf)
   x = x0:dx:xf-dx;
   y = sin(x);
@@ -11,7 +11,7 @@ function graficaSeno(x0,dx,xf)
   pause
 endfunction
 
-#Grafica la señal Sinc = sin(x)/x
+#Ejercicio 1.2) Grafica la señal Sinc = sin(x)/x
 function graficaSinc(x0,dx,xf)
   if (x0 == 0) #pequeño arreglo para el caso en que x0 = 0. 
     disp "Division por cero, arreglando"
@@ -23,7 +23,7 @@ function graficaSinc(x0,dx,xf)
   pause
 endfunction
 
-#Grafica la señal Onda Cuadrada
+#Ejercicio 1.3) Grafica la señal Onda Cuadrada
 function graficaOndaCuadrada(x0,dx,xf)
   x = x0:dx:xf-x0;
   y = sign( sin(x) );
@@ -32,9 +32,9 @@ function graficaOndaCuadrada(x0,dx,xf)
 endfunction
 
 
-#Grafica la señal Onda Triangular usando la funcion de Heaviside
+#Ejercicio 1.4) Grafica la señal Onda Triangular
+#Nota: el dx debe ser grande para que se vea el efecto, sino, reprogramar la función.
 function graficaOndaTriangular(x0,dx,xf)
-  pkg load specfun;
   x = x0:dx:xf-dx;
   for i=1:length(x)
     if (mod(i,2) == 0)
@@ -47,7 +47,7 @@ function graficaOndaTriangular(x0,dx,xf)
   pause
 endfunction
 
-#Grafica la señal Delta de Dirac
+#Ejercicio 1.5) Grafica la señal Delta de Dirac
 function graficaDeltaDirac(x0,dx,xf)
   pkg load specfun;
   x = x0:dx:xf-dx;
@@ -62,7 +62,8 @@ function graficaDeltaDirac(x0,dx,xf)
   pause
 endfunction
 
-#Grafica Ruido Aleatorio
+#Ejercicio 1.6) Grafica Ruido Aleatorio
+#Distribución normal: u=0 ; s=1;
 function graficaRuido(x0,dx,xf)
   x = x0:dx:xf-dx;
   y = randn(length(x),1);
