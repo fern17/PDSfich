@@ -50,24 +50,27 @@ function y=interpolador_escalon(x)
 			y(i) = 1;
 		else
 			y(i) = 0;
+		endif
 	end
 endfunction
 
 function y=interpolador_lineal(x)
 	for i=1:length(x)
-		if (abs(x(i) < 1) 
-			y(i) = 1 - abs(x) ;
+		if (abs(x(i)) < 1) 
+			y(i) = 1 - abs(x(i)) ;
 		else
 			y(i) = 0;
+		endif
 	end
 endfunction
 
 function y=interpolador_sinc(x)
 	for i=1:length(x)
-		if (abs(x(i) < 1) 
-			y(i) = 1 - abs(x) ;
+		if (abs(x(i)) < 1) 
+			y(i) = 1 - abs(x(i)) ;
 		else
 			y(i) = 0;
+		endif
 	end
 endfunction
 
