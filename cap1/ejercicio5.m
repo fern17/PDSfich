@@ -6,38 +6,31 @@
 
 # Definicion de una señal arbitraria "continua".
 function y=senal_arbitraria(x)
-	y = 2*sin(2*pi*x);
+	y = 2*sin(20*pi*x);
 endfunction
 
-# frecuencia:	frecuencia de muestreo.
-# x0:			inicio intervalo
-# xf:			fin intervalo
-function [xd,yd]=muestrear_senal(frecuencia, x0, xf)
+# frecuencia_muestreo:	frecuencia de muestreo.
+# x0:					inicio intervalo
+# xf:					fin intervalo
+function [xd,yd]=muestrear_senal(frecuencia_muestreo , x0, xf)
 	intervalo = xf - x0;
-	dx = 1 / (intervalo*frecuencia);
+	dx = 1 / (intervalo*frecuencia_muestreo);
 	xd = x0:dx:xf-dx;
 
 	for i=1:length(xd)
 		yd(i) = senal_arbitraria(xd(i));
 	end
 
-	#Ploteamos algo "continuo" para ver diferencias
-	x = x0:0.01:xf-0.01;
-	for i=1:length(x)
-		y(i) = senal_arbitraria( x(i) );
-	end
+	% clf;
+	% clear plot;
 
+	% figure(1);
+	% hold on;
+	% plot(xd,yd, 'b');
+	% hold on;
+	% plot(x,y, 'g');
 
-	clf;
-	clear plot;
-
-	figure(1);
-	hold on;
-	stem(xd,yd, 'b');
-	hold on;
-	#plot(x,y, 'g');
-
-	legend('Muestreada', 'Original')
+	% legend('Muestreada', 'Original')
 
 
 endfunction
@@ -74,10 +67,39 @@ function y=interpolador_sinc(x)
 	end
 endfunction
 
+function [x_continuo, y_continuo]=interpolador(xd, T, x_continuo)
+	for i=1:length(x_continuo)
+		y_continuo(i) = sum( i*T 
+			* interpolador_lineal(
+					(x_continuo(i) - i*T)) / T
+		 );
+	end
+endfunction
+
 #################### Fin declaración de funciones y procedimientos ####################
 #################### Fin declaración de funciones y procedimientos ####################
 #################### Fin declaración de funciones y procedimientos ####################
 #################### Fin declaración de funciones y procedimientos ####################
 
+x0 = -0.5; 
+xf = 1;
+dx_continuo = 0.0025;
+frecuencia_muestreo = 10;
+T = 1/frecuencia_muestreo;
+% Graficamos la funcion arbitraria "continua"
+x_continuo = x0:dx_continuo:xf-dx_continuo;
 
-muestrear_senal(0.13, -5, 4);
+clf;
+clear plot;
+figure(1);
+plot(x_continuo, senal_arbitraria(x_continuo) , 'y');
+
+%Obtenemos la funcion discretizada
+[xd, yd] = muestrear_senal(frecuencia_muestreo, x0, xf);
+
+[intx, inty] = interpolador(xd, T, x_continuo);
+
+hold on;
+plot(intx,inty, 'b');
+
+
