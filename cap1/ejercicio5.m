@@ -67,9 +67,9 @@ function y=interpolador_sinc(x)
 	end
 endfunction
 
-function [x_continuo, y_continuo]=interpolador(xd, T, x_continuo)
+function [x_continuo, y_continuo]=interpolador(xd, yd, T, x_continuo)
 	for i=1:length(x_continuo)
-		y_continuo(i) = sum( i*T 
+		y_continuo(i) = sum( yd(i) 
 			* interpolador_lineal(
 					(x_continuo(i) - i*T)) / T
 		 );
@@ -97,7 +97,7 @@ plot(x_continuo, senal_arbitraria(x_continuo) , 'y');
 %Obtenemos la funcion discretizada
 [xd, yd] = muestrear_senal(frecuencia_muestreo, x0, xf);
 
-[intx, inty] = interpolador(xd, T, x_continuo);
+[intx, inty] = interpolador(xd, yd, T, x_continuo);
 
 hold on;
 plot(intx,inty, 'b');
