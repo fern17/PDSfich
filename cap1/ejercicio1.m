@@ -82,7 +82,7 @@ clear plot;
 #graficaSeno(X0,DX,Xf)
 #graficaSinc(X0,DX,Xf)
 #graficaOndaCuadrada(X0,DX,Xf)
-#graficaOndaTriangular(X0,DX * 600,Xf)
-graficaDeltaDirac(-2,DX,2)
-#graficaRuido(X0,DX,Xf)
+graficaOndaTriangular(X0,DX * 600,Xf)
+#graficaDeltaDirac(-2,DX,2)
+graficaRuido(X0,DX,Xf)
 

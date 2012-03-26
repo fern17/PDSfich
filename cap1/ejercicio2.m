@@ -66,7 +66,6 @@ endfunction
 cuantizacion(10, 2, 0, -5, 0.01, 5);
 
 
-
 #Ejercicio 2.6  #traslación
 function traslacion(A, w, phi, t0, dt, tf, tita, color = 'b')
 	t = t0:dt:tf-dt;
