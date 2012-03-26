@@ -6,7 +6,7 @@
 
 # Definicion de una señal arbitraria "continua".
 function y=senal_arbitraria(x)
-	y = 2*sin(20*pi*x);
+	y = sin(10*pi*x);
 endfunction
 
 # frecuencia_muestreo:	frecuencia de muestreo.
@@ -37,24 +37,20 @@ endfunction
 
 
 ### interpoladores
-function y=interpolador_escalon(x)
-	for i=1:length(x)
-		if (x(i) <= 0 && x(i) < 1)
-			y(i) = 1;
-		else
-			y(i) = 0;
-		endif
-	end
+function y=interpolador_escalon(t)
+  if (t < 1 && t >= 0)
+    y = 1;
+  else
+    y = 0;
+  end
 endfunction
 
-function y=interpolador_lineal(x)
-	for i=1:length(x)
-		if (abs(x(i)) < 1) 
-			y(i) = 1 - abs(x(i)) ;
-		else
-			y(i) = 0;
-		endif
-	end
+function y=interpolador_lineal(t)
+  if (abs(t < 1)) 
+    y = 1 - abs(t) ;
+  else
+    y = 0;
+  end
 endfunction
 
 function y=interpolador_sinc(x)
@@ -68,12 +64,16 @@ function y=interpolador_sinc(x)
 endfunction
 
 function [x_continuo, y_continuo]=interpolador(xd, yd, T, x_continuo)
-	for i=1:length(x_continuo)
-		y_continuo(i) = sum( yd(i) 
-			* interpolador_lineal(
-					(x_continuo(i) - i*T)) / T
-		 );
-	end
+  for j=1:length(x_continuo)
+    suma = 0;
+    for i=1:length(xd)
+      suma = suma + ( yd(i)
+        * interpolador_lineal(
+            (x_continuo(j) - xd(i)) / T)
+       );
+    end
+    y_continuo(j) = suma;
+  end
 endfunction
 
 #################### Fin declaración de funciones y procedimientos ####################
@@ -92,11 +92,13 @@ x_continuo = x0:dx_continuo:xf-dx_continuo;
 clf;
 clear plot;
 figure(1);
-plot(x_continuo, senal_arbitraria(x_continuo) , 'y');
+plot(x_continuo, senal_arbitraria(x_continuo) , 'r');
 
 %Obtenemos la funcion discretizada
 [xd, yd] = muestrear_senal(frecuencia_muestreo, x0, xf);
+hold on
 
+stem(xd,yd)
 [intx, inty] = interpolador(xd, yd, T, x_continuo);
 
 hold on;

@@ -15,7 +15,7 @@ function discretiza_seno(A, f, phi, t0, tn, fm)
 endfunction
 
 #Indique la frecuencia de muestreo deseada en Hertz
-f_muestreo = 129;
+f_muestreo = 130;
 discretiza_seno(1,4000,0,0,2,f_muestreo)
 
 #Estimación de la Frecuencia de la señal muestreada:
