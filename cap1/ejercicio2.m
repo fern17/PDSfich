@@ -40,18 +40,22 @@ endfunction
 #rectificacion(10, 2, 0, -5, 0.01, 5); 
 
 #Ejercicio 2.5  #cuantización
-
-function y=ro(x, H, N) #Definición de la funcion de Rectificacion
-	if x < 0
-		y = 0;
-	elseif x < (N-1)*H 
-		y = H*floor(x/H);
-	else
-		y = (N -1 ) * H;
-	end
+#La cuantizacion usa potencias de dos, donde L=2^H
+function y=ro(x, H, N) #Definición de la funcion de Cuantizacion
+  n = length(x);
+  for i=1:n
+    if x(i) < 0
+      y(i) = 0;
+    elseif x(i) < (N-1)*H
+      y(i) = H*floor(x(i)/H);
+    else
+      y(i) = (N-1)*H;
+    end
+  end
 endfunction
 
-function cuantizacion(A, w, phi, t0, dt, tf, H = 4, color = 'b')
+#H es la altura de cada cuanto. H = Amplitud/niveles_de_cuantizacion
+function cuantizacion(A, w, phi, t0, dt, tf, H, color = 'b')
 	#Ferdi dijo: Mientras H se acerca a dt entonces la grafica cuantizada se aproxima igual a la discretizada. 
     clf;
 	t = t0:dt:tf-dt;
@@ -59,11 +63,13 @@ function cuantizacion(A, w, phi, t0, dt, tf, H = 4, color = 'b')
 	plot(t, A*sin(w*t + phi) , 'r');
 	hold on;
 	plot(t, ro(A*sin(w*t + phi), H, length(t) ), color);
-	#hold on;
+	hold on;
 
 endfunction
 
-cuantizacion(10, 2, 0, -5, 0.01, 5);
+amp = 10;
+niveles = 8;
+cuantizacion(amp, 2, 0, -5, 0.01, 5, amp/niveles)
 
 
 #Ejercicio 2.6  #traslación

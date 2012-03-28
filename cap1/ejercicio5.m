@@ -1,12 +1,13 @@
 1;
 #ejercicio5.m
 
-# Discretice una señal arbitraria con frecuencia de muestreo de 10 Hz y sobremuestreela mednainte
+
+# Discretice una señal arbitraria con frecuencia de muestreo de 10 Hz y sobremuestreela mediante
 # distintos tipos de interpoladores a 4 veces la frecuencia de muestreo.
 
 # Definicion de una señal arbitraria "continua".
 function y=senal_arbitraria(x)
-	y = sin(10*pi*x);
+	y = sin(2*pi*5*x);
 endfunction
 
 # frecuencia_muestreo:	frecuencia de muestreo.
@@ -21,18 +22,6 @@ function [xd,yd]=muestrear_senal(frecuencia_muestreo , x0, xf)
 		yd(i) = senal_arbitraria(xd(i));
 	end
 
-	% clf;
-	% clear plot;
-
-	% figure(1);
-	% hold on;
-	% plot(xd,yd, 'b');
-	% hold on;
-	% plot(x,y, 'g');
-
-	% legend('Muestreada', 'Original')
-
-
 endfunction
 
 
@@ -46,7 +35,7 @@ function y=interpolador_escalon(t)
 endfunction
 
 function y=interpolador_lineal(t)
-  if (abs(t < 1)) 
+  if (abs(t) < 1) 
     y = 1 - abs(t) ;
   else
     y = 0;
@@ -54,21 +43,21 @@ function y=interpolador_lineal(t)
 endfunction
 
 function y=interpolador_sinc(x)
-	for i=1:length(x)
-		if (abs(x(i)) < 1) 
-			y(i) = 1 - abs(x(i)) ;
-		else
-			y(i) = 0;
-		endif
-	end
+  EPS = 0.00001;
+  if (abs(x) > EPS) 
+    y = sin(x)/x ;
+  else
+    y = 1;
+  endif
 endfunction
 
-function [x_continuo, y_continuo]=interpolador(xd, yd, T, x_continuo)
+function [x_continuo, y_continuo]=interpolador(xd, yd, frecuencia, x_continuo)
+  T = 1/frecuencia;
   for j=1:length(x_continuo)
     suma = 0;
     for i=1:length(xd)
       suma = suma + ( yd(i)
-        * interpolador_lineal(
+        * interpolador_sinc(
             (x_continuo(j) - xd(i)) / T)
        );
     end
@@ -99,9 +88,8 @@ plot(x_continuo, senal_arbitraria(x_continuo) , 'r');
 hold on
 
 stem(xd,yd)
-[intx, inty] = interpolador(xd, yd, T, x_continuo);
+[intx, inty] = interpolador(xd, yd, frecuencia_muestreo*4, x_continuo);
 
 hold on;
-plot(intx,inty, 'b');
-
-
+plot(intx,inty, 'y');
+legend('Original', 'Muestreada', 'Interpolada');

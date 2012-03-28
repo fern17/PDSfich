@@ -3,6 +3,8 @@
 # Para correr algunas funciones es necesario el paquete specfun
 # sudo apt-get install octave-specfun
 
+EPS = 0.000001
+
 #Ejercicio 1.1) Grafica la señal Seno
 function graficaSeno(x0,dx,xf)
   x = x0:dx:xf-dx;
@@ -49,11 +51,9 @@ endfunction
 
 #Ejercicio 1.5) Grafica la señal Delta de Dirac
 function graficaDeltaDirac(x0,dx,xf)
-  pkg load specfun;
   x = x0:dx:xf-dx;
-  y = dirac(x);
   for i=1:length(x)
-    if x(i) == 0
+    if abs(x(i)) < EPS
       y(i) = 9999;
       break;
     endif

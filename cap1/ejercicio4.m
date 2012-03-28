@@ -27,3 +27,5 @@ discretiza_seno(1,4000,0,0,2,f_muestreo)
 # original, y de ahí que la frecuencia de la muestra, poco tiene que ver con la original.
 
 # POORQUE 129 Hz DA UNA SEÑAL TAN COHERENTE?
+# Debe existir una formula para obtener matematicamente la cantidad de hertz de muestreo necesario para una correcta discretizacion de la señal.
+# TODO: averiguar la formula y dibujarla en nuestro brazo.
