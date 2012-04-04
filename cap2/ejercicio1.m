@@ -9,8 +9,6 @@ function y = senal(x)
     y = rampa;
 endfunction
 
-
-
 function m = valorMedio(x, y)
     m = sum(y)/length(y);
 endfunction
