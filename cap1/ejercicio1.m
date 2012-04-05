@@ -3,7 +3,7 @@
 # Para correr algunas funciones es necesario el paquete specfun
 # sudo apt-get install octave-specfun
 
-EPS = 0.000001
+EPS = 0.000001;
 
 #Ejercicio 1.1) Grafica la señal Seno
 function graficaSeno(x0,dx,xf)
@@ -35,19 +35,14 @@ endfunction
 
 
 #Ejercicio 1.4) Grafica la señal Onda Triangular
-#Nota: el dx debe ser grande para que se vea el efecto, sino, reprogramar la función.
 function graficaOndaTriangular(x0,dx,xf)
   x = x0:dx:xf-dx;
-  for i=1:length(x)
-    if (mod(i,2) == 0)
-      y(i) = 1;
-    else
-      y(i) = 0;
-    endif
-  end
-  plot(x,y)
-  pause
-endfunction
+#  y = 2/pi*asin(sin(2*pi*x));
+  y = 2*abs(2*((x-0.25) - floor(x-0.25))-1)-1;
+  clf;
+  plot(x,y);
+  hold on;
+ endfunction
 
 #Ejercicio 1.5) Grafica la señal Delta de Dirac
 function graficaDeltaDirac(x0,dx,xf)
@@ -72,17 +67,18 @@ function graficaRuido(x0,dx,xf)
 endfunction
 
 #inicializaciones
-X0 = -20*pi;
-Xf = 20*pi;
+X0 = 0;
+Xf = 2*pi;
 DX = 0.01;
 
 
 clear plot;
+
 #llamado a funciones
 #graficaSeno(X0,DX,Xf)
 #graficaSinc(X0,DX,Xf)
 #graficaOndaCuadrada(X0,DX,Xf)
-graficaOndaTriangular(X0,DX * 600,Xf)
-#graficaDeltaDirac(-2,DX,2)
-graficaRuido(X0,DX,Xf)
+graficaOndaTriangular(X0,DX,Xf)
+#graficaDeltaDirac(X0,DX,Xf)
+#graficaRuido(X0,DX,Xf)
 
