@@ -1,0 +1,64 @@
+CAPITULO 1:
+PREGUNTAS
+
+1- Cómo intervienen los criterios prácticos y los errores de medición y cómputo en la clasificación fenomenológica de las señales reales?
+	La principal división dentro de la clasificación fenomenológica es si son Determinísticas o Aleatorias. Para que una señal sea determinística, se deben poder predecir EXACTAMENTE sus valores de antemano. Sin embargo, cuando realizamos procesamiento digital, siempre está el factor de error de la medición, de redondeo o truncamiento, lo que ocasiona que, en la mayoría de los casos, los valores con los que trabajemos sean una aproximación de los reales. Así, nunca se cuenta con determinismo perfecto, si no que se cuenta con aproximaciones lo más fieles posibles. Es aquí que hay que poner una tolerancia en los errores y mediciones, para decidir sobre qué se considera determinista o no.
+
+2- Clasifique las siguientes señales según todos los criterios que conoce:
+	a) La velocidad del viento en Mabuji-Maye (Zaire): 
+	Debido a que es un fenómeno natural, se estima que siempre será una señal aleatoria, estacionaria y no ergódica. Además, si estamos hablando de la señal original, es analógica y contínua.
+	b) y(t) = sin(2*pi*100*t) con t,y perteneciendo a los reales.
+	Es una señal determinística ya que para cualquier valor de t, podemos saber el resultado (siempre que se use un valor de pi constante). Además, es periódica y sinusoidal. Se trata de una señal analógica contínua.
+	c) La intesidad de luz del pixel (38,178) cuando se proyecta la película "El nombre de la Rosa".
+	Debido a que la proyección puede tener cualquier tipo de interferencia, es una señal aleatoria y no estacionaria.
+	d) La corriente que circula por el cable del teclado de su computadora
+	Se supone que la corriente tiene siempre la misma forma y valor. Sin embargo, una simple baja de tensión momentánea ocasiona un cambio en la señal. Por lo tanto, se considera una señal aleatoria. Sin embargo, dada su forma conocida, podemos tratarla como estacionaria ergódica.
+	e) El delta de Dirac
+	La fórmula es clara, por lo que es determinista y aperiódica.
+	f) La variación anual de habitantes de origen asiático en Buenos Aires
+	Si bien hay estudios sobre este fenómeno, nada se puede predecir (incluso se podrían evidenciar crecimientos o decrecimientos). Así, la señal es aleatoria y no estacionaria.
+	g) La altura de las aguas en la costa del río Genil (España)
+	Este caso es similar al a). Por lo tanto, aleatoria, estacionaria y no ergódica.
+	h) El consumo de combustible por minuto que requiere un F1 durante el Gran Premio de Mónaco.
+	Se supone que las escuderías tienen estudiado todos los consumos de los autos en todas las situaciones. Así, se podría tomar a esta señal como determinística. Pero un simple factor ambiental como la subida de la presión o temperatura, desviaría el cálculo. Así, se trata de una señal Aleatoria y No Estacionaria.
+	i) La suma de todas las emisiones con contenido futbolísitico en Radio Mitre.
+	Esta señal depende de muchas variables (interés del campeonato, factores políticos, otros eventos) que no se pueden predecir. Así, se considera Aleatoria y no estacionaria.
+	j) Las ganancias mensuales y la cantidad de fallas en los productos de Micro$oft en los últimos 10 años.
+	Como estos valores ya están calculados y no pueden variar, se considera una señal determinística y aperiódica. Además, se trata de una señal discreta.
+	k) 
+
+
+3- Realice una lista de las señales que pueden medirse en el cuerpo humano y clasifíquelas según los criterios morfológico, fenomenológico y dimensional:
+Los siguientes son algunos ejemplos de señales que se pueden encontrar en el cuerpo humano.
+Presión arterial: Contínuo / Aleatoria Ergódica / Unidimensional
+Ritmo de contracción de pulmones: Discreto, Aleatoria / Unidimensional
+Tono de la voz: Contínuo pero con saltos / Aleatoria / Unidimensional
+Actividad de las neuronas en la corteza cerebral: Discreto / Aleatoria / Bidimensional o Tridimensional, depende la forma de analizarla
+Cantidad de glóbulos blancos: Discreto / Aleatoria / Unidimensional
+
+4- Por qué razón se necesitan muchas realizaciones de una señal aleatoria para poder comprobar experimentalmente su estacionariedad?
+La estacionariedad, a medida que las muestras tienden a infinito, se transforma en una variable estadística con distribución normal. Del estudio de la Probabilidad y Estadística, sale el supuesto que para hacer evaluaciones más fieles a la situación real, se necesita una gran cantidad de muestras. Por lo tanto, si obtenemos una gran cantidad de muestras de una señal, podemos utilizarlas para ver si la señal es estacionaria o no (de lo contrario, si son pocas, podríamos tener un juicio equivocado, al sólo ver una parte muy pequeña del fenómeno).
+
+5- Describa el proceso de verificación de la ergodicidad de una señal aleatoria asumiendo que el promedio y la desviación estándar son medidas suficientes para su caracterización estadística.
+Tomamos la señal y la muestreamos N veces, y la almacenamos en una matriz, donde cada fila es un muestreo distinto.
+Para que una señal sea ergódica, primero debe verificar estacionariedad. Para ello, tomamos todas las columnas (o algunas, separadas cada un número finito de momentos o no), y calculamos la media y la varianza de esa columna. Luego verificamos que las muestras (una por cada fila) estén dentro del intérvalo de confianza de una distribución normal.
+Luego de verificar la estacionariedad, repetimos el mismo proceso pero en las filas. Para todas las filas, tomamos todos los valores, calculamos media y varianza, y luego verificamos que la mayoría (según una confiabilidad de por ejemplo el 90%) estén dentro del intérvalo de confianza [mu +/- 2*desvio_estandar]
+
+6- Enuncie las hipótesis que se han hecho sobre la señal en el punto anterior y generalice la prueba de ergodicidad mediante el uso de medidas aptas para el caso más general.
+En el ejercicio anterior se hizo la suposición que tanto las muestras dentro de una medición, como las diferentes muestreos de los fenómenos, a medida que la cantidad de experimentos aumentan, la probabilidad de desvío de los valores reales forman una distribución normal estándar. En el caso más general, esto no es así y se requieren pruebas estadísticas más fuertes, como el test de hipótesis.
+
+7- Qué beneficio práctico brinda poder asumir que una determinada señal es ergódica?
+Si sabemos de antemano que una señal es ergódica, obtenemos la certeza que no importa qué experimento de la señal estemos mirando, ésta tendrá todas las propiedades de la señal. Por lo tanto, no necesitaremos usar una gran cantidad de muestras ya que una sola nos bastará. El caso de señales ergódicas es el caso más cercano a las señales deterministas, y es lo mejor que podemos obtener para trabajar en señales aleatorias.
+
+8- Por qué decimos que el random de una computadora es pseudo aleatoria? Puede una computadora digital generar una señal realmente aleatoria?
+El random de una computadora genera secuencias de números aleatorios pero que se repiten cada un cierto período. Se consideran aleatorias porque este período es muy largo y en la práctica, es muy difícil que evidenciemos la repetición de la secuencia. Sin embargo, la secuencia puede ser conocida, lo que la convierte en una señal determinística y no aleatoria.
+Una computadora digital no puede generar una secuencia aleatoria ya que todo con lo que trabaja es determinista, y la única forma de generar algo aleatorio es a partir de un fenómeno aleatorio.
+
+9- Analice el proceso de discretización en tiempo de un período de la señal x(t) = cos(2*pi*10*t). Incremente el período de muestreo hasta no poder recostruir la señal contínua a partir de la señal de tiempo discreto.
+Dado que la frecuencia es 10 Hz, el período es 0.1. 
+Si muestreamos la senal en [0,1] con un paso de 0.001, la señal se reconstruye con muy buena precisión.
+Al descender una escala, a 0.01, empezamos a notar un error en la representación (ya que estamos muestrando sólo 10 veces en un período).
+Al acercarnos a 0.1 con el paso, la señal se empieza a perder totalmente.
+
+10- Si posee una señal con la forma x(t) = sin(2*pi*100*t) + r(t), donde r(t) es una señal aleatoria con distribución uniforme en [-0.1;0.1], cómo procederia para calcular la relación señal ruido?
+Debido a que el ruido sigue una distribución uniforme, cualquier valor que dé esta señal es igualmente probable, por lo que sería prudente tomar el peor caso (el máximo valor que puede dar r(t) y tomar a r(t) como constante en ese valor. Así, calculamos la potencia de r(t) que seria P_r = max(r(t))^2 * N, donde N es la cantidad de muestras de las señales.
