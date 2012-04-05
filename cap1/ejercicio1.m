@@ -35,6 +35,7 @@ endfunction
 
 
 #Ejercicio 1.4) Grafica la señal Onda Triangular
+#Fuente de la forma de hacerla: http://octave.1599824.n4.nabble.com/triangular-wave-td1631398.html
 function graficaOndaTriangular(x0,dx,xf)
   x = x0:dx:xf-dx;
 #  y = 2/pi*asin(sin(2*pi*x));
