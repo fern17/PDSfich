@@ -3,7 +3,7 @@
 % S = { y / y = A*sin(2*pi*f*t + phi) / A, f, phi pertenece a los Reales }
 
 x0 = -5;
-dx = 0.1;
+dx = 0.001;
 xf = 6;
 % Parámetros senal1
 A1 = 2;
