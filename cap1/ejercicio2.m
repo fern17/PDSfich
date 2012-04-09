@@ -21,7 +21,7 @@ clear plot;
 #operacion_alfa(10, 2, 0, -5, 0.01, 5, 1);
 
 #Ejercicio 2.1  #expansión
-#operacion_alfa(10, 2, 0, -5, 0.01, 5, 0.3, 'y');   
+#operacion_alfa(10, 2, 0, -5, 0.01, 5, 0.5, 'y');   
 
 #Ejercicio 2.2  #compresión
 #operacion_alfa(10, 2, 0, -5, 0.01, 5, 5.3, 'r');
@@ -35,7 +35,6 @@ function rectificacion(A, w, phi, t0, dt, tf, color = 'b')
 	t = t0:dt:tf-dt;
 	#figure(1);
 	plot(t, abs(A*sin(w*t + phi)), color)
-	#hold on;
 endfunction
 #rectificacion(10, 2, 0, -5, 0.01, 5); 
 
@@ -63,13 +62,12 @@ function cuantizacion(A, w, phi, t0, dt, tf, H, color = 'b')
 	plot(t, A*sin(w*t + phi) , 'r');
 	hold on;
 	plot(t, ro(A*sin(w*t + phi), H, length(t) ), color);
-	hold on;
 
 endfunction
 
 amp = 10;
 niveles = 8;
-cuantizacion(amp, 2, 0, -5, 0.01, 5, amp/niveles)
+#cuantizacion(amp, 2, 0, -5, 0.01, 5, amp/niveles)
 
 
 #Ejercicio 2.6  #traslación
@@ -81,7 +79,7 @@ function traslacion(A, w, phi, t0, dt, tf, tita, color = 'b')
 
 endfunction
 clear plot;
-#traslacion(10, 2, 0, -5, 0.01, 5, 0); 
-#traslacion(10, 2, 0, -5, 0.01, 5, 0.3, 'y');
-#traslacion(10, 2, 0, -5, 0.01, 5, -0.6, 'r');
-#legend('Original', 'Trasladada a Izq', 'Trasladada a Der') 
+traslacion(10, 2, 0, -5, 0.01, 5, 0); 
+traslacion(10, 2, 0, -5, 0.01, 5, 0.3, 'y');
+traslacion(10, 2, 0, -5, 0.01, 5, -0.6, 'r');
+legend('Original', 'Trasladada a Izq', 'Trasladada a Der') 

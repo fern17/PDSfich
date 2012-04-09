@@ -11,8 +11,8 @@ function y=senal_arbitraria(x)
 endfunction
 
 # frecuencia_muestreo:	frecuencia de muestreo.
-# x0:					inicio intervalo
-# xf:					fin intervalo
+# x0:inicio intervalo
+# xf:fin intervalo
 function [xd,yd]=muestrear_senal(frecuencia_muestreo , x0, xf)
 	intervalo = xf - x0;
 	dx = 1 / (intervalo*frecuencia_muestreo);
@@ -51,13 +51,22 @@ function y=interpolador_sinc(x)
   endif
 endfunction
 
+function y=interpolador_sinc_normalizado(x)
+  EPS = 0.00001;
+  if (abs(x) > EPS) 
+    y = sin(x*pi)/(x*pi) ;
+  else
+    y = 1;
+  endif
+endfunction
+
 function [x_continuo, y_continuo]=interpolador(xd, yd, frecuencia, x_continuo)
   T = 1/frecuencia;
   for j=1:length(x_continuo)
     suma = 0;
     for i=1:length(xd)
       suma = suma + ( yd(i)
-        * interpolador_sinc(
+        * interpolador_sinc_normalizado(
             (x_continuo(j) - xd(i)) / T)
        );
     end
