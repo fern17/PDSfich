@@ -4,3 +4,8 @@ PARCIALITO 1:
 1) Realice el código para implementar una interpolación de orden 1 de una señal x[n]. Para tal fin, no está permitido usar las funciones interp o interp1 de Matlab. El usuario debe poder especificar la frecuencia de muestreo original y la de destino.
 
 2) En el ejercicio 4 de la guía, se pedía discretizar una señal senoidal de 4000 Hz. con una frecuencia de muestreo de 129 Hz. Esquematice gráficamente el resultado de dicho proceso y explique EN DETALLE sus conclusiones con respecto al fenómeno que observa.
+
+PARCIALITO 2:
+1) Escriba una función que permita realizar la cuantización en P niveles de una señal de valores tanto positivos como negativos.
+
+2) Escriba una función que tome como entrada una señal x[n], un ruido r[n], ambos de igual longitud N y un valor de relación señal ruido en decibeles SNR, y permita estimar el valor de una constante alfa tal que la señal resultante y[n] = x[n] + alfa*r[n] tenga una relación señal ruido igual a la deseada, SNR.
