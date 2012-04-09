@@ -3,19 +3,22 @@
 #Ejercicio 4  #Discretizacion de la funcion Seno de 5 Hz.
 
 function discretiza_seno(A, f, phi, t0, tn, fm)
-  x = t0:1/fm:tn-1/fm;
-  y = A*sin(f*x*2*pi + phi);#Se elimina el 2pi porque se pasa a Radianes, que es el argumento del seno
+  dx = 1/fm;
+  x = t0:dx:tn-dx;
+  y = A*sin(f*x*2*pi + phi);
+  
   clear plot
   figure(1)
-  z = t0:0.0001:tn-0.001;
+  
+  z = t0:0.0001:tn-0.0001;
   plot(z,A*sin(f*z*2*pi + phi),'r')
   hold on 
-  plot(x,y)
+  plot(x,y,'b')
   pause
 endfunction
 
 #Indique la frecuencia de muestreo deseada en Hertz
-f_muestreo = 130;
+f_muestreo = 129;
 discretiza_seno(1,4000,0,0,2,f_muestreo)
 
 #Estimación de la Frecuencia de la señal muestreada:

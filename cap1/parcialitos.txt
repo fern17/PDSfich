@@ -1,0 +1,6 @@
+PARCIALITOS
+
+PARCIALITO 1:
+1) Realice el código para implementar una interpolación de orden 1 de una señal x[n]. Para tal fin, no está permitido usar las funciones interp o interp1 de Matlab. El usuario debe poder especificar la frecuencia de muestreo original y la de destino.
+
+2) En el ejercicio 4 de la guía, se pedía discretizar una señal senoidal de 4000 Hz. con una frecuencia de muestreo de 129 Hz. Esquematice gráficamente el resultado de dicho proceso y explique EN DETALLE sus conclusiones con respecto al fenómeno que observa.
