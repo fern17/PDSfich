@@ -27,7 +27,7 @@ endfunction
 
 #Ejercicio 1.3) Grafica la señal Onda Cuadrada
 function graficaOndaCuadrada(x0,dx,xf)
-  x = x0:dx:xf-x0;
+  x = x0:dx:xf-dx;
   y = sign( sin(x) );
   plot(x,y)
   pause
