@@ -28,7 +28,5 @@ y_aproximada = y_aprox(t);
 plot(t, y_orig, 'b');
 hold on
 plot(t, y_aproximada, 'r');
-hold on;
-error_cuadratico = norm(y_orig - y_aproximada,2)^2
-
+error_cuadratico_medio = norm(y_orig - y_aproximada,2)^2
 
