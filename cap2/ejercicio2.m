@@ -38,5 +38,3 @@ hold on
 plot(x,y2,'b');
 hold on
 plot(x,y1.+y2,'y');
-hold on;
-
