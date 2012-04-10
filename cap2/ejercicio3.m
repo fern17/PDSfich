@@ -3,17 +3,17 @@
 % S = { y / y = A*sin(2*pi*f*t + phi) / A, f, phi pertenece a los Reales }
 
 x0 = -1;
-dx = 0.01;
+dx = 0.001;
 xf = 2;
 % Parámetros senal1
 A1 = 2;
-f1 = 4;
+f1 = 8;
 phi1 = 0;
 
 % Parametros senal2
-A2 = 10;
-f2 = 12.5;
-phi2 = 10;
+A2 = 2;
+f2 = 8;
+phi2 = 0;
 
 % 
 function y = senal(x,A,f,phi)
@@ -33,3 +33,8 @@ figure(1);
 plot(x,y1,'r');
 hold on
 plot(x,y2,'b');
+
+
+% Podemos observar que si tienen frecuencia distinta el valor del
+% producto punto es chico y negativo, en cambio si las señales tienen la misma frecuencia
+% y por lo tanto son iguales, el valor del producto punto es grande y positivo.
