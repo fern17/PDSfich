@@ -2,12 +2,17 @@
 % El espacio de señales senoidales se define como:
 % S = { y / y = A*sin(2*pi*f*t + phi) / A, f, phi pertenece a los Reales }
 
+% Pero debemos aclarar que f tiene que ser constante ya que sino, no cumple
+% el axioma de cerradura con respecto a la suma por ejemplo la señal 
+% s3 = 10*sin(2*pi*10*t + phi )  + 5*sin(2*pi*3*t + phi ) . A pesar de ser
+% periodica, No pertenece al conjunto de senoidales.
+
 x0 = -5;
 dx = 0.001;
 xf = 6;
 % Parámetros senal1
 A1 = 2;
-f1 = 4;
+f1 = 2;
 phi1 = 0;
 
 % Parametros senal2
@@ -34,3 +39,4 @@ plot(x,y2,'b');
 hold on
 plot(x,y1.+y2,'y');
 hold on;
+
