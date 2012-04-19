@@ -37,3 +37,31 @@ hold on;
 pause;
 #plot(f,abs(y1s),';Transformada centrada;');
 pause;
+
+
+# BEGIN OF MARIANITA'S EXAMPLE IN MATHLAB:
+
+function []=signal()
+  f1 = 10; f2 = 60;
+    T = 0.001;
+N = 1000;
+
+t = 0:T:1-T;
+% LTI means La tenes Inside. * (ferdy 1990 - 2565)
+	y=2*sin(2*pi*f1*t) + sin(2*pi*f2*t) + 10*randn();
+
+ fm=1/T;
+ df=fm/N;
+ frec=[- (fm/2):df:(fm/2)-df];
+ S=fftshift(fft(y)/(N/2));
+ subplot(2,1,1);
+ plot(t,y, 'y');
+ subplot(2,1,2);
+ stem(frec,abs(S));
+ sumy=sum(y.^2);
+ sumS=(1/N)*(sum(abs(S*(N/2)).^2));
+ ricura = sumy - sumS
+end
+
+
+
