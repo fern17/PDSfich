@@ -1,6 +1,11 @@
 clear;
 hold off;
 
+%   ~~~~~~   TODO: Comprobar si está bien el calculo de ortogonalidad
+%   ~~~~~~   TODO: Comprobar si está bien el calculo de ortogonalidad
+%   ~~~~~~   TODO: Comprobar si está bien el calculo de ortogonalidad
+%   ~~~~~~   TODO: Comprobar si está bien el calculo de ortogonalidad
+
 
 % Definición de las señales
 function y=signala(t)
