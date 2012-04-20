@@ -20,6 +20,28 @@ function y=signalc(t)
 	y = sin(2*pi*4*t);
 endfunction
 
+function r=es_ortogonal(conjunto)
+	N = length(conjunto);
+	tolerancia = 0.00001;
+	for i=1:N
+		for j=1:N
+			pinterno = dot(conjunto(i), conjunto(j) );
+			if (i == j)
+				if (abs(pinterno) < tolerancia )
+					r=0;
+					return;
+				end
+			else
+				if (abs(pinterno) >= tolerancia )
+					r=0;
+					return
+				end
+			end
+		end %for j
+	end % for i
+	r = 1;
+endfunction
+
 
 Fm = 100;
 Tm = 1/Fm;
@@ -34,19 +56,19 @@ sc = signalc(t);
 
 % Parte 1) Verificar ortogonalidad: <xi, xj> = 0 / i!=j
 
-if (dot(sa,sb) < tolerancia)
+if (es_ortogonal( [sa sb] ))
 	disp("a y b son ortogonales");
 else
 	disp("a y b no son ortogonales");
 end
 
-if (dot(sa,sc) < tolerancia)
+if (es_ortogonal( [sa sc] ))
 	disp("a y c son ortogonales");
 else
 	disp("a y c no son ortogonales");
 end
 
-if (dot(sc,sb) < tolerancia)
+if (es_ortogonal( [sc sb] ))
 	disp("c y b son ortogonales");
 else
 	disp("c y b no son ortogonales");
@@ -58,20 +80,20 @@ tfsb = fft(sb);
 tfsc = fft(sc);
 
 
-if (dot(tfsa,tfsb) < tolerancia)
+if (es_ortogonal( [tfsa tfsb] ))
 	disp("TF de a y b son ortogonales");
 else
 	disp("TF a y b no son ortogonales");
 end
 
-if (dot(tfsa,tfsc) < tolerancia)
+if (es_ortogonal( [tfsa tfsc] ))
 	disp("TF de a y c son ortogonales");
 else
 	disp("TF a y c no son ortogonales");
 end
 
 
-if (dot(tfsc,tfsb) < tolerancia)
+if (es_ortogonal( [tfsc tfsb] ))
 	disp("TF de c y b son ortogonales");
 else
 	disp("TF c y b no son ortogonales");
