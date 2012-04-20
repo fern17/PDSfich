@@ -11,8 +11,8 @@ endfunction
 function yc = cuantizacion(x,y,P)
     n = length(x);
     yc = zeros(n,1);
-    maxi = max(y);
-    H = 2*maxi/(P-1);
+    maxi = max(y)-min(y);
+    H = 2*maxi/(P);
     for i=1:n
         yc(i) = cuantizar(y(i), H);
     end
