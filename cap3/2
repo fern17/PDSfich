@@ -2,8 +2,8 @@ clear;
 hold off;
 
 %parametro que define como voy a dibujar
-centrada = false;
-dibuja_shifted = false;
+centrada = true;
+dibuja_shifted = true;
 
 %parametros para dibujar
 dibuja_senal = true;
@@ -31,13 +31,13 @@ function y = constante(A,f,phi,t)
     y = A*ones(length(t),1);
 endfunction
 
-%dibuja un pulso de modulo A entre [t0,tf]
+%dibuja un pulso de modulo A entre t0 y tf
 function y = pulso(A,t0, dt, tf, t)
     n = length(t);
     y = zeros(n,1);
     for i=1:n
         idx = i*dt;
-        if ((idx >= t0) && (idx <= tf))
+        if ((idx >= t0) && (idx < tf))
             y(i) = A;
         end
     end
@@ -58,7 +58,7 @@ function [x] = fourier_trans_inv(X)
     x = ifft(X);
 endfunction
 
-Tm = 0.01;                      %periodo de muestreo
+Tm = 0.0001;                      %periodo de muestreo
 t0 = 0;                         %t inicial
 tf = 1;                         %t final
 fm = 1/Tm;                      %muestras por periodo
@@ -68,17 +68,17 @@ t = t0:Tm:tf-Tm;                %puntos a muestrear
 N = length(t);                  %cantidad de muestras
 
 %Parametros de la señal (Amplitud, Frecuenca y Fase)
-A = 1;
+A = 40;
 f = 1;
 phi = 0;
 
-y = 200 + seno(300,8,0,t) + seno(100,14,0,t); %senal del parcialito
+%y = 100 + seno(150,8,0,t) + seno(50,14,0,t); %senal del parcialito
 %y = 10 + seno(15,25,0,t);
 %y = onda_cuadrada(A,f,phi,t);
 %y = coseno(A,f,phi,t);
 %y = constante(A,f,phi,t);
 %y = seno(A,f,phi,t) + seno(A/2,3*f,phi,t);
-%y = pulso(A,t0,Tm,0.35,t);
+y = pulso(A,t0,Tm,tf/4,t);
 
 [X,Xs,Amp,Fases] = fourier_trans(y);        %transforma y guarda los resultados
 
