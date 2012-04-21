@@ -2,11 +2,11 @@ clear;
 hold off;
 
 %parametro que define como voy a dibujar
-centrada = false;
-dibuja_shifted = false;
+centrada = true;
+dibuja_shifted = true;
 
 %parametros para dibujar
-dibuja_senal = true;
+dibuja_senal = false;
 dibuja_ifft = false;
 dibuja_modulo = true;
 dibuja_fase = false;
@@ -58,22 +58,22 @@ function [x] = fourier_trans_inv(X)
     x = ifft(X);
 endfunction
 
-Tm = 0.01;                      %periodo de muestreo
+fm = 129;                      %muestras por periodo
+Tm = 1/fm;                      %periodo de muestreo
 t0 = 0;                         %t inicial
 tf = 1;                         %t final
-fm = 1/Tm;                      %muestras por periodo
-
 t = t0:Tm:tf-Tm;                %puntos a muestrear
 
 N = length(t);                  %cantidad de muestras
 
+df = fm/N;
 %Parametros de la señal (Amplitud, Frecuenca y Fase)
 A = 1;
-f = 1;
+f = 4000;
 phi = 0;
 
-y = 200 + seno(300,8,0,t) + seno(100,14,0,t); %senal del parcialito
-%y = 10 + seno(15,25,0,t);
+%y = 200 + seno(300,8,0,t) + seno(100,14,0,t); %senal del parcialito
+y = seno(A,f,phi,t);
 %y = onda_cuadrada(A,f,phi,t);
 %y = coseno(A,f,phi,t);
 %y = constante(A,f,phi,t);
@@ -86,7 +86,7 @@ y_inv = fourier_trans_inv(X);               %antitransformo
 
 if (centrada == true) 
     %eje centrado
-    ejex = (-length(X)/2):(length(X)/2-1);  %transforma el ejex para que vaya de -N/2 a N/2-1
+    ejex = (-floor(fm/2):df:ceil(fm/2)-1);  %transforma el ejex para que vaya de -N/2 a N/2-1
 else 
     %no centrado
     ejex = 1:length(X);
@@ -113,9 +113,9 @@ end
 if (dibuja_fase == true) %dibuja las fases
     figure(3);
     if (dibuja_shifted == true)
-        Fases = atan(imag(Xs)./real(Xs));
+        Fases = atan(imag(Xs),real(Xs));
     end
-    stem(ejex,Fases,'g');
+    stem(ejex,Fases,'r');
     title('Fases');
 end
 
