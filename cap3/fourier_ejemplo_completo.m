@@ -69,7 +69,7 @@ N = length(t);                  %cantidad de muestras
 df = fm/N;
 %Parametros de la señal (Amplitud, Frecuenca y Fase)
 A = 1;
-f = 4000;
+f = 40;
 phi = 0;
 
 %y = 200 + seno(300,8,0,t) + seno(100,14,0,t); %senal del parcialito
@@ -107,7 +107,7 @@ if (dibuja_modulo == true) %dibuja las amplitudes
         Amp = abs(Xs);
     end
     stem(ejex,Amp,'r');
-    title('Modulo');
+    title('Modulo((A/2)*N');
 end
 
 if (dibuja_fase == true) %dibuja las fases
