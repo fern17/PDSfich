@@ -7,20 +7,14 @@ function cc = cconv(x,h)
         disp('ERROR. Dimension de x y h distinta');
     end
     cc = zeros(N,1);
-
+    ht = fliplr(h);
     for n=1:N
-        for m=1:N
-            suma = 0;
-            for k=1:N
-                suma = suma + x(mod(n - m - k*N,N) + 1);
-            end
-        end
-        cc(n) = h(n)*suma;
+        ht = shift(ht,1);
+        cc(n) = dot(x,ht);
     end
 endfunction
 
-x = [1 2 2];
-h = [2 1 0.5];
+x = [1 2 3];
+h = [4 2 1];
 
-z = cconv(x,h);
-z
+z = cconv(x,h)
