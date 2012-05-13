@@ -16,21 +16,31 @@ w = [0:1/fm:2*pi-1/fm];
 z = r*e.^(j*w*2*pi);
 
 resp_freq = h(z);
-resp_freq2 = freqz([1 -2 2 -1], [1 -17/10 4/5 -1/10], length(w),"whole");
+resp_freq2 = freqz([1 -1 1], [1 -7/10 + 1/10], length(w),"whole") ;
 
 resp_impulso = ifft(resp_freq);
 resp_impulso2 = ifft(resp_freq2);
+
+N = 1000;
+x = zeros(1,N); x(1) = 1;
+y = zeros(1,N);
+y(1) = 1;
+y(2) = -3/10;
+for n=3:N
+   y(n) = 1/10*(10*x(n)-10*x(n-1)+10*x(n-2)-(-7*y(n-1)+y(n-2)));
+end
+
 
 hold on;
 %stem(abs(resp_freq),'b');
 
 figure(1);
 stem(real(resp_impulso),'r');
-stem(real(resp_impulso2),'b');
+stem(y,'b');
 
 figure(2);
 diferencia = abs(real(resp_impulso)' .- real(resp_impulso2));
-stem(diferencia);
+%stem(diferencia);
 maxima_diferencia = max(abs(diferencia))
 
 pause;
