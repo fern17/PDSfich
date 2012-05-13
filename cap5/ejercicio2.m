@@ -26,13 +26,13 @@ hold on;
 figure(1);
 plot(h,'b');
 
-x = randn(1,100);
-y = convolucion_lineal(x,h);
+x = ones(1,n);
+%y = convolucion_lineal(x,h);
 y2 = conv(x,h);
 figure(2);
-plot(y,'r')
+plot(y2,'r')
 
-figure(3);
-plot(y.-y2);
+%figure(3);
+%plot(y.-y2);
 
 pause;
