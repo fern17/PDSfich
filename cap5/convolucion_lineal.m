@@ -14,7 +14,8 @@ function convolucion = convolucion_lineal(x,h)
 		for j=1:N %recorremos H
 			R_temp(i+j-1) = x(i) * h(j);
 		end
-		convolucion = convolucion + R_temp;
+		R_temp
+        convolucion = convolucion + R_temp
 	end
 endfunction
 
@@ -37,8 +38,9 @@ function y2 = convolucion_minita(x,h)
 	end
 endfunction
 
-x = [1 2 2];
-h = [2 1 0.5];
+x = [5 1 4 0];
+h = [0.5 4 2 1 0];
 
 convolucion_lineal(x,h)
-convolucion_minita(x,h)
+conv(x,h)
+%convolucion_minita(x,h)
