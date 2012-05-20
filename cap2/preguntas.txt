@@ -1,0 +1,52 @@
+2.5 PREGUNTAS
+1) Podemos considerar a las señales de N muestras de en un espacio R^N de la siguiente forma:
+Tomamos el primer valor y consideramos que es la coordenada en el eje 1. Tomamos el segundo valor y consideramos que la coordenada en el eje 2.
+Repetimos el procedimiento hasta N. Así, tenemos N coordenadas que definen un punto en el espacio R^N.
+
+2) Las señales contínuas tienen infinitos puntos, por lo tanto, para una señal x(t), se tienen infinitos valores donde cada uno define una coordenada en cada uno de los ejes. Como hay infinitos valores, hay infinitos ejes y define entonces un punto en el espacio R^+inf.
+
+3) Al ver las señales como puntos en R^N, podemos aprovecharnos de todas las propiedades algebraicas que tiene este espacio N-dimensional.
+
+4) Las normas sirven para dar una idea del tamaño de una señal. Existen distintos tipos de normas ya que cada una aborda un aspecto distinto del 'tamaño'.
+
+5) Una norma-p con p=0 (norma-0) se define como la cantidad de valores de X que son distintos de cero (o de un valor especificado). Así, esta norma mide la dispersión de la señal en torno al 0.
+
+6) La norma-inf se interpreta como el mayor valor absoluto de todos los valores de X. Gráficamente, para R^2, se interpreta como un cuadrado. En espacios n-dimensionales, se representa por un cuadrado n-dimensional (cubo en 3 dimensiones, hipercubo en n-dimensiones). Representa la amplitud de la señal.
+
+7) La norma-p toma distintos nombres según el valor de p y cómo se aplique al estudiar las propiedades de una señal;
+  * Acción: p = 1
+  * Energía: p = 2, (norma-2)^2
+  * Potencia Media: P(x) = 1/N * sum{n=1,N} (|x_n|^2), (1/N)*(norma-2)^2
+  * Potencia Media Total: P(x) = lim {n->+inf} 1/(2N) * sum{n=-N,N} (|x_n|^2), lim (1/2N)*(norma-2)^2
+  * Valor Cuadrático Medio: sqrt(P(x))
+  * Amplitud: p = +inf.
+
+8) Una norma-2 se define como el cuadrado del producto interno de una señal consigo misma: |x|_2 = sqrt(x_i^2) = sqrt(sum(x_i x_i)) = sqrt(<x,x>) 
+	=> (|x|_2)^2 = <x,x>. 
+En el caso contínuo, el producto interno se define como una integral sobre infinito. El dt de esta integral contínua, equivale a 1 en el caso discreto, ya que es la diferencia entre una muestra y la siguiente.
+
+9) Se necesita usar el conjugado en el producto interno cuando los vectores que intervienen son complejos. Pero sólo se debe conjugar uno de ellos.
+
+10) El producto interno mide el parecido entre dos señales porque, en el caso de medir el parecido de x con y, el producto interno cuánto tiene x de y. Si y es unitaria, el producto interno nos permite ver directamente esto. En R^2, el producto interno nos da la proyección de x sobre y. En más dimensiones, nos da la cantidad de componente que tiene x de y.
+
+11) El producto interno es una proyección.
+
+12) Un conjunto es un grupo de señales que cumplen una propiedad común. Un espacio, además de cumplir una propiedad común, tiene asociado el concepto de distancia entre dos señales.
+
+13) Si, ya que las distancias se miden distinto entre ellas.
+
+14) Al definir un espacio vectorial con señales (una vez que nos aseguramos que una señal pertenece a un espacio vectorial), nos aprovechamos de muchas propiedades de los espacios vectoriales que ya están demostradas y comprobadas, por lo que las aceptamos sin más.
+
+15) Tomamos dos señales generales, aplicamos las propiedades y vemos si el resultado también pertenece al espacio de señales.
+
+16) Cuando queremos expresar un vector x en una base (como una combinación lineal de los elementos de la base y ciertos coeficientes), si la base es ortonormal, los coeficientes se obtienen con un simpre producto interno entre el x y los elementos de la base.
+
+17) La condición de que un conjunto sea una base de un espacio es que genere al espacio y sea linealmente independiente. Por lo tanto, un conjunto dependiente NO es una base. Si un conjunto de señales no es ortogonal, aún puede ser una base.
+
+18) [ver libro, pág. 60]
+
+19) Una transformación lineal mapea un vector de un espacio a un vector de otro espacio. Por otra parte, una base define un espacio (una base genera un espacio y es LI). Si hacemos un cambio de base, estamos cambiando de base un vector, lo que en definitiva es aplicarle una transformación de espacio, que es una transformación lineal.
+
+20) Un cambio de base desde la base canónica es una rotación si la nueva base es ortogonal
+
+21) Si una base es ortonormal, cuando hacemos el cambio de base, estamos proyectando en otra base. Se mantiene la misma información y por lo tanto se mantiene la energía...
