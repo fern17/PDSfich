@@ -1,0 +1,22 @@
+3. PREGUNTAS
+1) La Transformada de Fourier tiene las mismas unidades que la señal
+
+2) La TF nos ayuda a interpretar la señal desde una nueva perspectiva (frecuencias). Dependiendo de la aplicación, nos podrá ayudar o no.
+
+3) Si utilizamos una base que no es ortogonal, perderemos la unicidad de la transformación inversa, por lo que no podremos recostruir la señal luego. Nos puede servir si queremos redundancia de la TF y no estamos interesados en la transformación inversa.
+
+4) Si, existe y tiene una sola frecuencia distinta de 0, ya que es ortogonal con todo el resto.
+
+5) Porque las funciones sinusoidales son funciones impares, por lo que si hacemos una combinación lineal de ellas, sólo podremos representar señales impares y nunca representaremos señales pares.
+
+6) Al hacer un desplazamiento de la frecuencia, lo que estamos haciendo es multiplicar en el tiempo por una exponencial, que equivale a modularla.
+
+7) El inconveniente es en el tipo de muestreo. Si no es hecho correctamente, la señal puede perder muchísima información.
+
+8) El aliasing se produce cuando se muestrea mal la señal. Vemos su efecto por la generación de frecuencias inexistentes en su transformada. Además, al antitransformar, recobraremos una señal que poco tiene que ver con la original, pues está mal muestreada y no se puede reconstruir. En una imagen, el aliasing se ve por la generación de colores que en realidad no están ahí y son fruto de un mal muestreo.
+
+9) Para disminuir los efectos de aliasing, debemos muestrear a una alta frecuencia. La primer frecuencia de muestreo que nos garantiza que no tendremos aliasing es la del doble de la frecuencia de la señal.
+
+10) Cuando muestreamos una señal, la suponemos periódica más allá de la muestra. Es por esto que, en frecuencia, su espectro equivale a una señal periódica aunque ésta no la sea.
+
+11) 
