@@ -54,7 +54,7 @@ endfunction
 %   figure(2);
 %   hist(peaks2);
 
-%specgram(sound,8192,sr);
+specgram(sound1,8192,sr1);
 length(sound1)
 ffts1 = fftshift(fft(sound1));
 hold on;
