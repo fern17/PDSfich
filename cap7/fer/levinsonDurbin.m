@@ -6,24 +6,30 @@
 %  A, coeficientes de cada iteracion
 %  E, error en cada iteracion
 
-function [A,E] = levinsonDurbin(r,p)
-    E = zeros(1,p+1); %notar que E(i) = E(i-1), ya que E0 = E(1)
-    E(1) = r(1);
-    A = zeros(p,p);
-    k = zeros(1,p);
+function [A,G,E] = levinsonDurbin(r,orden)
+    Et = r(1);
+    A = zeros(1,orden);  
+    E = [Et];
 
-    for i=1:p
-        suma = 0;
-        for j=1:(i-1)
-            suma = suma + A(j,i-1)*r(i-j);
+    for i=1:orden
+        At = zeros(1,i+1);
+        At(1) = 1;
+        suma = r(i+1);
+        for j=2:i
+            suma = suma + A(j)*r(i-j+2);
         end
-        k(i) = (-1/E(i))*(r(i) + suma);
-        A(i,i) = k(i);
-        for j=1:(i-1)
-            A(j,i) = A(j,i-1) + k(i)*A(i-j,i-1);
+        %k = (-1/E(i))*(r(i) + suma)
+        k = -suma/Et;
+        
+        for j=2:i
+            At(j) = A(j) + k*A(i-j+2);
         end
-        E(i+1) = E(i)*(1-k(i)^2);
+        At(i+1) = k;
+        Et = Et*(1-k^2);
+        E = [E Et];
+        A = At;
     end
+    G = sqrt(E(orden));
     
 endfunction
 
