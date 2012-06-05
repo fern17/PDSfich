@@ -1,53 +1,68 @@
 
 %Calcula la ubicacion de los polos de butterworth, dado N y la frecuencia de corte deseada
-function [sm] = polosButterworth(fc,N)
+function [sm] = polosButterworth(N)
     sm = zeros(1,2*N);
     for i=1:2*N
-        sm(i) = fc*exp(j*pi*(N+2*i-1)/(2*N));
+        sm(i) = exp(j*pi*(N+2*i-1)/(2*N));
+
     end
 endfunction
+
+
+function [nceros, npolos, nganancia] = pasaBajoAPasaAlto(polos, ganancia, wp)
+    nceros = [];
+    npolos = [];
+    nganancia = ganancia;
+    N = length(polos);
+    for i=1:N
+        polo = polos(i);
+        nceros = [nceros 0];
+        npolos = [npolos wp/polo];
+        nganancia = nganancia * (-1/polo);
+    end
+endfunction
+
+function zev = evaluarZeta(z, T, polos, ceros, ganancia)
+    zev = ganancia;
+    s = (2/T)*(1 - z^(-1))/(1 + z^(-1));
+    for c = ceros
+        zev = zev * (s - c);
+    end
+
+    for p = polos
+        zev = zev / (s - p);
+    end
+endfunction
+
+
+function resp = pasaAltosButter(frec_paso, frec_muestreo, orden)
+    polos = polosButterworth(orden);
+    ganancia = 1;
+    T = 1/frec_muestreo;
+    w_nueva = (2/T) * tan(pi*frec_paso*T); % WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT
+    [ceros, polos, ganancia] = pasaBajoAPasaAlto(polos, ganancia, w_nueva);
+    valores = [0:T:1 - T];
+    z = exp(j*2*pi*valores);
+    for i=1:length(z)
+        resp(i) = evaluarZeta(z(i), T, polos, ceros, ganancia);
+    end
+endfunction
+
+%------
 
 %parametros
-frec_corte = 500;
+frec_paso = 500;
 frec_muestreo = 2000;
+orden = 10;
 
-%grado del polinomio de butterworth
-N = 10;
-
-%calculo de los ceros y polos
-ceros = [];
-polos = polosButterworth(frec_corte,N);
-
-
-function hz = respuestaFrecuencia(polos,wc,T,z)
-    N2 = length(polos);
-    M = length(z);
-    hz = zeros(1,M);
-    for i=1:M
-        value = (z(i) - 1)/(z(i) + 1); % formula sacada del defatta
-        %value = ((2/T)*((1 - z(i)^(-1))/(1 + z(i)^(-1))));
-        numerador = value^N2;
-        denominador = 1;
-        for j=1:N2
-            denominador = denominador * (wc - polos(j)*value);
-        end
-        hz(i) = numerador/denominador;
-    end
-endfunction
-
-%Lugares del circulo en z donde evaluar
-T = 4*frec_muestreo;
-dz = 1/T;
-z = 0:dz:pi - dz;
-evaluar = exp(j*z);
-
-%encuentra la respuesta en frecuencia
-hz = respuestaFrecuencia(polos,frec_corte,T,evaluar);
-
+resp_frec = pasaAltosButter(frec_paso, frec_muestreo, orden);
 
 %dibuja
-nn = length(hz);
-dff = T/nn;
+nn = length(resp_frec);
+T = 1/frec_muestreo;
+dff = frec_muestreo/nn;
 escala = [0:dff:nn*dff - dff];
-figure(1); stem(escala, abs(hz));
+
+figure(1); plot(abs(resp_frec));
+
 pause;
