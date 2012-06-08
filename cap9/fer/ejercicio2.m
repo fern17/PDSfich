@@ -67,12 +67,18 @@ function pitch_cep = pitch_cepstrum(fragmento, frec_muestreo)
     pitch_cep = (frec_muestreo/(inicio+idx)); %le sumo el desplazamiento y convierto a frecuencia
 end
 
-%Calculo del pitch con el metodo del cepstrum
-function pitchs_cep = calcularPitchCepstrum(frase, ventana, frec_muestreo)
+
+function [pitchs_cep, pitchs_autocor] = calcularPitch(frase, frec_muestreo);
     N = length(frase);
-    ancho_ventana = length(ventana);
+    %Configuracion de la ventana a utilizar
+    ancho_ms = 30;                                  %ancho en milisegundos de la ventana
+    ancho_ventana = ancho_ms*frec_muestreo/1000;    %ancho en muestras de la ventana
+    ventana = hanning(ancho_ventana);               %definicion de la ventana
+
+    %calculo de los pitchs
     pitchs_cep = [];
-    
+    pitchs_autocor = [];
+
     for i=1:ceil(N/ancho_ventana)
         inicio = (i-1)*ancho_ventana + 1;           %inicio de la ventana a procesar
         fin = ancho_ventana*i;                      %fin de la ventana
@@ -87,52 +93,16 @@ function pitchs_cep = calcularPitchCepstrum(frase, ventana, frec_muestreo)
         if(esSonoro(energia,cruces))
             cep = (ifft(log(abs(fft(fragmento_v)))));
             pitchs_cep = [pitchs_cep pitch_cepstrum(cep, frec_muestreo)];
-        else
-            pitchs_cep = [pitchs_cep 0];
-        end
-    end
-endfunction
-
-%Calculo del pitch con el metodo de la autocorrelacion
-function pitchs_autocor = calcularPitchAutocorrelacion(frase, ventana, frec_muestreo)
-    N = length(frase);
-    ancho_ventana = length(ventana);
-    pitchs_autocor = [];
-    energias = [];
-    for i=1:ceil(N/ancho_ventana)
-        inicio = (i-1)*ancho_ventana + 1; %inicio de la ventana a procesar
-        fin = ancho_ventana*i; %fin de la ventana
-        fragmento = frase(((i-1)*ancho_ventana + 1):min(ancho_ventana*i,N)); %calcula fragmento
-        
-        if(length(fragmento) < ancho_ventana) %termino de recorrer cuando la ventana es chica
-            break;
-        end;
-        fragmento_v = fragmento .* ventana; %ventanea fragmento
-        
-        energia = calcular_energia(fragmento_v);
-        cruces = contar_cruces(fragmento_v);
-        if(esSonoro(energia,cruces))
             pitchs_autocor = [pitchs_autocor pitch_autocorrelacion(fragmento_v', frec_muestreo)];
         else
+            pitchs_cep = [pitchs_cep 0];
             pitchs_autocor = [pitchs_autocor 0];
         end
     end
+
 endfunction
 
-function [pitchs_cep, pitchs_autocor] = calcularPitch(frase, frec_muestreo);
-    N = length(frase);
-    %Configuracion de la ventana a utilizar
-    ancho_ms = 30;                                  %ancho en milisegundos de la ventana
-    ancho_ventana = ancho_ms*frec_muestreo/1000;    %ancho en muestras de la ventana
-    ventana = hanning(ancho_ventana);               %definicion de la ventana
-
-    %calculo de los pitchs
-    pitchs_cep = calcularPitchCepstrum(frase, ventana, frec_muestreo);
-    pitchs_autocor = calcularPitchAutocorrelacion(frase, ventana, frec_muestreo);
-    
-endfunction
-
-
+%devuelve la frase con una relacion senal ruido dada por snr
 function frase_ruido = contaminarRuido(frase, snr)
    N = length(frase);
    ruido = randn(N,1);
@@ -142,6 +112,18 @@ function frase_ruido = contaminarRuido(frase, snr)
    frase_ruido = frase + alfa*ruido;
 endfunction
 
+%filtra los pitchs mayores a 350 y menores a 50
+function pitchs_filtrados = filtrarBajosAltos(pitchs)
+    pitchs_filtrados = [];
+    for i=1:length(pitchs)
+        if(pitchs(i) >= 50 & pitchs(i) <= 350)
+            pitchs_filtrados = [pitchs_filtrados pitchs(i)];
+        else
+            pitchs_filtrados = [pitchs_filtrados 0];
+        end
+    end
+endfunction
+
 %-----------------------------------------------
 
 %Carga el audio
@@ -149,34 +131,28 @@ frec_muestreo = 8000;
 frase = load("sent.txt");
 frase = frase(125:length(frase)); %quita todos los ceros del principio
 
-snr_querida = 20;
-frase = contaminarRuido(frase,snr_querida);
+frases = [frase contaminarRuido(frase,50) contaminarRuido(frase,20) contaminarRuido(frase,0)];
 
 %Calcula el pitch con dos metodos distintos
-[pitchs_cep, pitchs_autocor] = calcularPitch(frase, frec_muestreo);
+[pitchs_cep100, pitchs_autocor100]  = calcularPitch(frases(:,1), frec_muestreo);
+[pitchs_cep50, pitchs_autocor50]    = calcularPitch(frases(:,2), frec_muestreo);
+[pitchs_cep20, pitchs_autocor20]    = calcularPitch(frases(:,3), frec_muestreo);
+[pitchs_cep0, pitchs_autocor0]      = calcularPitch(frases(:,4), frec_muestreo);
 
-%Filtra
-pitchs_filtrados_cep = [];
-for i=1:length(pitchs_cep)
-    if(pitchs_cep(i) >= 50 & pitchs_cep(i) <= 350)
-        pitchs_filtrados_cep = [pitchs_filtrados_cep pitchs_cep(i)];
-    else
-        pitchs_filtrados_cep = [pitchs_filtrados_cep 0];
-    end
-end
+%Proceso de filtrado
+pitchs_filtrados_cep100 = filtrarBajosAltos(pitchs_cep100);
+pitchs_filtrados_cep50  = filtrarBajosAltos(pitchs_cep50);
+pitchs_filtrados_cep20  = filtrarBajosAltos(pitchs_cep20);
+pitchs_filtrados_cep0   = filtrarBajosAltos(pitchs_cep0);
 
-pitchs_filtrados_autocor = [];
-for i=1:length(pitchs_autocor)
-    if(pitchs_autocor(i) >= 50 & pitchs_autocor(i) <= 350)
-        pitchs_filtrados_autocor = [pitchs_filtrados_autocor pitchs_autocor(i)];
-    else
-        pitchs_filtrados_autocor = [pitchs_filtrados_autocor 0];
-    end
-end
+pitchs_filtrados_autocor100 = filtrarBajosAltos(pitchs_autocor100);
+pitchs_filtrados_autocor50  = filtrarBajosAltos(pitchs_autocor50);
+pitchs_filtrados_autocor20  = filtrarBajosAltos(pitchs_autocor20);
+pitchs_filtrados_autocor0   = filtrarBajosAltos(pitchs_autocor0);
 
-M1 = length(pitchs_autocor);
+M1 = length(pitchs_autocor100);
 x1 = 0:M1-1;
-M2 = length(pitchs_cep);
+M2 = length(pitchs_cep100);
 x2 = 0:M2-1;
 
 %Dibuja
@@ -191,9 +167,9 @@ hold on;
 hold on;
 figure(1); 
 subplot(2,1,1);
-plot(x1,pitchs_filtrados_autocor,'b');
+plot(x1,pitchs_filtrados_autocor100,'b');
 ylim([50, 400]);
 subplot(2,1,2);
-plot(x2,pitchs_filtrados_cep,'r');
+plot(x2,pitchs_filtrados_cep100,'r');
 ylim([50, 400]);
 pause;
