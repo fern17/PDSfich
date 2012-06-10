@@ -1,0 +1,4 @@
+- implementar la transf continua
+- agregar filtros ? 
+- Extender a señales de tamaño que no sea potencia de 2 ?
+- Escalograma -> ejes para el caso matlab
