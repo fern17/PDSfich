@@ -1,6 +1,6 @@
 %Guia de Filtros. Ejercicio 1.
 clear;
-clf;
+%clf;
 hold on;
 
 %definición de polos y ceros
@@ -38,8 +38,11 @@ fm = 200;
 %calcula los ceros y polos
 [ceros,polos] = crearRaices(0.85,0.95);
 
-figure(1); zplane(ceros, polos);
-title("Diagrama de Polos 'X' y Ceros 'O' en plano Z");
+%figure(1); 
+%zplane(ceros, polos);
+%title("Diagrama de Polos 'X' y Ceros 'O' en plano Z");
+%xlabel("Parte Real");
+%ylabel("Parte Imaginaria");
 
 %%---Inciso B: graficar la respuesta en frecuencia
 
@@ -47,28 +50,33 @@ title("Diagrama de Polos 'X' y Ceros 'O' en plano Z");
 [numerador, denominador] = raicesAPolinomio(ceros,polos);
 
 %obtiene la respuesta en frecuencia
-respuesta_freq = freqz(numerador,denominador, fm,"whole");
+respuesta_freq = freqz(numerador,denominador, fm);
 
 %dibuja
-figure(2); stem(abs(respuesta_freq));
+%figure(2); stem(abs(respuesta_freq));
+%title("Respuesta en frecuencia"); xlabel("Frecuencia"); ylabel("|H(z)|");
 
 %%---Inciso C: normalizar los coeficientes del filtro
 
 %Calcula el coeficiente de normalizacion
-factor_normalizacion = length(respuesta_freq)/(max(abs(respuesta_freq))*2);
+factor_normalizacion = 1/max(abs(respuesta_freq));
 %Multiplica el numerador para normalizarlo
 numerador_normalizado = numerador*factor_normalizacion;
 %Calcula la respuesta en frecuencia normalizada
-respuesta_freq_normalizada = freqz(numerador_normalizado, denominador, fm, "whole");
+respuesta_freq_normalizada = freqz(numerador_normalizado, denominador, fm);
 %Dibuja
-figure(3); stem(abs(respuesta_freq_normalizada));
+%figure(3); stem(abs(respuesta_freq_normalizada));
+%title("Respuesta en frecuencia Normalizada"); xlabel("Frecuencia (Hz.)"); ylabel("|H(z)|");
 
 %%---Inciso D: modificar radio de polos y ver como cambia la respuesta en frecuencia
 
-[ceros2,polos2] = crearRaices(0.85,0.9);
+[ceros2,polos2] = crearRaices(0.85,0.99);
 [numerador2, denominador2] = raicesAPolinomio(ceros2,polos2);
-respuesta_freq2 = freqz(numerador2,denominador2, fm, "whole");
-figure(4); stem(abs(respuesta_freq2));
+respuesta_freq2 = freqz(numerador2,denominador2, fm);
+numerador2_n = numerador2/max(abs(respuesta_freq2));
+respuesta_freq2 = freqz(numerador2_n,denominador2, fm);
+%figure(4); stem(abs(respuesta_freq2));
+%title("Respuesta en frecuencia"); xlabel("Frecuencia (Hz.)"); ylabel("|H(z)|");
 
 %%---Inciso E: Generar una señal de 15 y 25 Hz y ver cómo funciona el filtro
 
@@ -91,7 +99,8 @@ paso_frecuencia = fm/length(espectro_senal);
 escala = [0:paso_frecuencia:length(respuesta_freq)*paso_frecuencia - paso_frecuencia];
 
 %dibuja
-figure(4);
+figure(5);
+title("Aplicación del filtro a una suma de senoidales");
 subplot(2,2,1); plot(t,senal,'r');
 xlabel("Tiempo"); ylabel("Amplitud");
 subplot(2,2,2); stem(escala, abs(espectro_senal),'r');
@@ -128,7 +137,7 @@ paso_frecuencia = fm2/length(espectro_senal);
 escala = [0:paso_frecuencia:length(respuesta_freq)*paso_frecuencia - paso_frecuencia];
 
 %dibuja
-figure(5);
+figure(6);
 title("Frecuencia de muestreo de 120 Hz.");
 subplot(2,2,1); plot(t,senal,'r');
 xlabel("Tiempo"); ylabel("Amplitud");

@@ -25,8 +25,8 @@ endfunction
 function energia = calcular_energia(senal)
     trans = abs(fft(senal)); %transforma
     N = length(trans);
-    evaluar = trans(floor(N/4):floor(N/2)); %se queda con el segundo cuarto que pertenece a las frecuencias altas
-    energia = sum(evaluar.^2); %calcula energia en espectro
+    %evaluar = trans(floor(N/4):floor(N/2)); %se queda con el segundo cuarto que pertenece a las frecuencias altas
+    energia = sum(trans.^2); %calcula energia en espectro
 endfunction
 
 %Devuelve true si el fragmento es sonoro.
@@ -161,15 +161,27 @@ hold on;
 %   figure(2); plot(frase); title("Frase");
 %   figure(3); plot(pitchs_cep); title("Pitchs por cepstrum");
 %   figure(4); plot(pitchs_autocor); title("Pitchs por autocorrelacion");
-
+figure(5); specgram(frases(:,1)); title("Espectrograma para senal sin ruido");
+figure(6); specgram(frases(:,2)); title("Espectrograma para SNR = 50");
+figure(7); specgram(frases(:,3)); title("Espectrograma para SNR = 20");
+figure(8); specgram(frases(:,4)); title("Espectrograma para SNR = 0");
 
 %figure(2); stem(energias)
 hold on;
 figure(1); 
-subplot(2,1,1);
-plot(x1,pitchs_filtrados_autocor100,'b');
-ylim([50, 400]);
-subplot(2,1,2);
-plot(x2,pitchs_filtrados_cep100,'r');
-ylim([50, 400]);
+subplot(2,1,1); plot(x1,pitchs_filtrados_autocor100,'b'); title("Pitch por Autocorrelacion. Sin ruido"); ylabel("Pitch"); ylim([50, 400]);
+subplot(2,1,2); plot(x2,pitchs_filtrados_cep100,'r'); title("Pitch por Cepstrum. Sin ruido"); xlabel("Tiempo"); ylabel("Pitch"); ylim([50, 400]);
+
+figure(2); 
+subplot(2,1,1); plot(x1,pitchs_filtrados_autocor50,'b'); title("Pitch por Autocorrelacion. SNR = 50"); ylabel("Pitch"); ylim([50, 400]);
+subplot(2,1,2); plot(x2,pitchs_filtrados_cep50,'r'); title("Pitch por Cepstrum. SNR = 50"); xlabel("Tiempo"); ylabel("Pitch"); ylim([50, 400]);
+
+figure(3); 
+subplot(2,1,1); plot(x1,pitchs_filtrados_autocor20,'b'); title("Pitch por Autocorrelacion. SNR = 20"); ylabel("Pitch"); ylim([50, 400]);
+subplot(2,1,2); plot(x2,pitchs_filtrados_cep20,'r'); title("Pitch por Cepstrum. SNR = 20"); xlabel("Tiempo"); ylabel("Pitch"); ylim([50, 400]);
+
+figure(4); 
+subplot(2,1,1); plot(x1,pitchs_filtrados_autocor0,'b'); title("Pitch por Autocorrelacion. SNR = 0"); ylabel("Pitch"); ylim([50, 400]);
+subplot(2,1,2); plot(x2,pitchs_filtrados_cep0,'r'); title("Pitch por Cepstrum. SNR = 0"); xlabel("Tiempo"); ylabel("Pitch"); ylim([50, 400]);
+
 pause;

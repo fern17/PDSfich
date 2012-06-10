@@ -2,3 +2,4 @@
 octave-core
 *.swp
 *.wav
+*.m~

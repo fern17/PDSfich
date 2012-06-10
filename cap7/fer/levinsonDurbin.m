@@ -6,9 +6,8 @@
 %  A, coeficientes de cada iteracion
 %  E, error en cada iteracion
 
-function [A,G,E] = levinsonDurbin(r,orden)
+function [A,G,E,Ep] = levinsonDurbin(r,orden)
     Et = r(1);
-    A = zeros(1,orden);  
     E = [Et];
 
     for i=1:orden
@@ -28,8 +27,9 @@ function [A,G,E] = levinsonDurbin(r,orden)
         Et = Et*(1-k^2);
         E = [E Et];
         A = At;
+        Ep = Et;
     end
-    G = sqrt(E(orden));
+    G = sqrt(Et);
     
 endfunction
 
