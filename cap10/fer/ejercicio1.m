@@ -2,7 +2,7 @@ clear all;
 clf;
 %nventana: id de ventana
 %anchoventana: ancho en muestras de ventana
-%solapamiento: cantidad de muestras de solapamiento entre ventanas
+%paso: cantidad de muestras que se mueven las ventanas sucesivas
 function espectrograma = espectrograma(senal,nventana = 1, anchoventana = 1, paso = 1)
     switch nventana
     case 1
@@ -29,20 +29,27 @@ function espectrograma = espectrograma(senal,nventana = 1, anchoventana = 1, pas
         fragmento = senal(inicio:fin-1) .* ventana(1:M); %ventaneo
         fft_frag = abs(fft(fragmento)); %calcula la transfromada rapida de fourier
         fft_frag = fft_frag(1:ceil(length(fft_frag)/2)); %se queda con potencias positivas
-        fft_frag = [fft_frag zeros(1,ceil(anchoventana/2)-length(fft_frag))];
+        fft_frag = [fft_frag zeros(1,ceil(anchoventana/2)-length(fft_frag))]; %rellena con ceros si el tamaño es corto
         espectrograma(:,i) = fft_frag.^2; %guarda energia
     end
 endfunction
 
-fm = 10000;
-T = 1/fm;
-t = 0:T:1-T;
-frec = 10;
-senal = sin(2*pi*t*frec);
+senal = load("te.txt")';
+%fm = 10000;
+%T = 1/fm;
+%t = 0:T:1-T;
+%frec = 10;
+%senal = sin(2*pi*t*frec);
 anchoventana = 256;
 paso = anchoventana/2;
-spectro1 = specgram(senal,anchoventana,fm,hanning(anchoventana),anchoventana-paso);
-spectro2 = espectrograma(senal,2,anchoventana,paso);
-figure(1); imagesc(log(abs(spectro1)));
-figure(2); imagesc(log(abs(spectro2)));
+
+spectro1 = espectrograma(senal,2,256,128);
+figure(1); imagesc(log(abs(spectro1))); title("Ancho de ventana(Hanning) de 256 muestras"); xlabel("Tiempo"); ylabel("Frecuencia");
+
+spectro2 = espectrograma(senal,2,1024, 512);
+figure(2); imagesc(log(abs(spectro2))); title("Ancho de ventana(Hanning) de 1024 muestras"); xlabel("Tiempo"); ylabel("Frecuencia");
+
+spectro3 = espectrograma(senal,2,512, 256);
+figure(3); imagesc(log(abs(spectro3))); title("Ancho de ventana(Hanning) de 512 muestras"); xlabel("Tiempo"); ylabel("Frecuencia");
+
 pause;

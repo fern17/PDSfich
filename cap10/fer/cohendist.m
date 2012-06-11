@@ -53,7 +53,7 @@ tfmax = max(max(abstf));
 tfmin = min(min(abstf));
 [pp,qq]=size(abstf);
 
-if (chksft=='octave')
+if (chksft!='octave')
    title(['Choi-Williams Distribution, sigma=' num2str(sigma)]);
    xlabel('Time')
    ylabel('Frequency')

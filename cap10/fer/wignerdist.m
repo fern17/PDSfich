@@ -40,7 +40,7 @@ abstf = real(afwig(1:N/2,:));%.*(real(afwig(1:N/2,:))>=zeros(N/2,N));
 tfmax = max(max(abstf));
 tfmin = min(min(abstf));
 [pp,qq]=size(abstf);
-if (chksft=='octave')
+if (chksft!='octave')
    %graph3(abstf,linspace(0,N-1,11),linspace(0,N/2,10)/N);
    imagesc(linspace(0,N-1,11),linspace(0,N/2,10)/N,abstf);
    title('WignerVille Distribution');
