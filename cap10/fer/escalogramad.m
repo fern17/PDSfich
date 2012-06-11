@@ -45,15 +45,15 @@ xtics=1:floor(nx/11):nx;
 ytics=1:niveles+1;
 aux=abs(cfd);
 
-if (chksft=='octave')
-   imagesc(xtics,ytics,aux);
+if (chksft!='octave')
    title('Transformada Discreta Diadica, coeficientes absolutos.');
    ylabel('Nivel (Escala=2^(Nivel))');
    xlabel('Tiempo');
-%   graph3(aux, xtics, ytics);
+   graph3(aux, xtics, ytics);
 else
    colormap(jet(256));
-   img = imagesc(xtics,ytics,wcodemat(cfd,256,'row'));
+   %img = imagesc(xtics,ytics,wcodemat(cfd,256,'row'));
+   img = imagesc(xtics,ytics,aux);
    title('Transformada Discreta Diadica, coeficientes absolutos.');
    ylabel('Nivel (Escala=2^(Nivel))');
    xlabel('Tiempo')

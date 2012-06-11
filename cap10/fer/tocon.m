@@ -132,7 +132,7 @@ for scp=smin:sstep:smax
 end
 [pp,qq]=size(sc);
 
-if (chksft=='octave')
+if (chksft!='octave')
    closeplot;
    title('CWT using Morlet wavelet');
    xlabel('Time')
